@@ -2,7 +2,7 @@
 
 interface //#################################################################### ■
 
-uses LUX, LUX.D3, LUX.Geometry.D3, LUX.Graph, LUX.Graph.Tree, LUX.Brep, LUX.Brep.Cell.TetraFlip;
+uses LUX, LUX.D3, LUX.Geometry.D3, LUX.Data.Tree, LUX.Brep, LUX.Brep.Cell.TetraFlip;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -66,7 +66,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraModel3D<_TPoin_,_TCell_>
 
-     TTetraModel3D<_TPoin_:class;_TCell_:class> = class( TTetraModel<_TPoin_,_TCell_> )
+     TTetraModel3D<_TPos_:record;_TPoin_:class;_TCell_:class> = class( TTetraModel<_TPos_,_TPoin_,_TCell_> )
      private
        ///// アクセス
        function Get_Self :TTetraModel3D; inline;
@@ -80,7 +80,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraModel3D
 
-     TTetraModel3D = class( TTetraModel3D<TTetraPoin3D,TTetraCell3D> )
+     TTetraModel3D = class( TTetraModel3D<TSingle3D,TTetraPoin3D,TTetraCell3D> )
      private
      protected
      public
@@ -241,7 +241,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-function TTetraModel3D<_TPoin_,_TCell_>.Get_Self :TTetraModel3D;
+function TTetraModel3D<_TPos_,_TPoin_,_TCell_>.Get_Self :TTetraModel3D;
 begin
      Result := TTetraModel3D( Self );
 end;
@@ -252,12 +252,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TTetraModel3D<_TPoin_,_TCell_>.LoadFromFile( const FileName_:String );
+procedure TTetraModel3D<_TPos_,_TPoin_,_TCell_>.LoadFromFile( const FileName_:String );
 begin
      _Self.LoadFromFile( FileName_ );
 end;
 
-procedure TTetraModel3D<_TPoin_,_TCell_>.SaveToFile( const FileName_:String );
+procedure TTetraModel3D<_TPos_,_TPoin_,_TCell_>.SaveToFile( const FileName_:String );
 begin
      _Self.SaveToFile( FileName_ );
 end;

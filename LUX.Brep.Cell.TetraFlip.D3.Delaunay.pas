@@ -2,7 +2,7 @@ unit LUX.Brep.Cell.TetraFlip.D3.Delaunay;
 
 interface //#################################################################### Å°
 
-uses LUX, LUX.D3, LUX.Geometry, LUX.Geometry.D3, LUX.Graph, LUX.Graph.Tree,
+uses LUX, LUX.D3, LUX.Geometry, LUX.Geometry.D3, LUX.Data.Tree,
      LUX.Brep, LUX.Brep.Cell.TetraFlip, LUX.Brep.Cell.TetraFlip.D3;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Åyå^Åz
@@ -33,7 +33,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TDelaunay3D
 
-     TDelaunay3D = class( TTetraModel3D<TDelaPoin,TDelaCell> )
+     TDelaunay3D = class( TTetraModel3D<TSingle3D,TDelaPoin,TDelaCell> )
      type
        TJoint = record
          Cell1 :TDelaCell;  Vert1 :Byte;  Edge1 :Byte;

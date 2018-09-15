@@ -2,11 +2,11 @@
 
 interface //#################################################################### ■
 
-uses LUX, LUX.Graph, LUX.Graph.Tree, LUX.Brep, LUX.Brep.Poin;
+uses LUX, LUX.Data.Tree, LUX.Brep, LUX.Brep.Poin;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TTetraPoin<_TPos_>                      = class;
+     TTetraPoin<_TPos_:record>               = class;
      TTetraCell<_TPoin_:class;_TCell_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -29,7 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoin<_TPos_>
 
-     TTetraPoin<_TPos_> = class( TPoin<_TPos_> )
+     TTetraPoin<_TPos_:record> = class( TPoin<_TPos_> )
      private
      protected
      public
@@ -66,17 +66,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Open                     :Shortint read GetOpen              ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraModel<_TPoin_,_TCell_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraModel<_TPos_,_TPoin_,_TCell_>
 
-     TTetraModel<_TPoin_:class;_TCell_:class> = class( TTreeNode<_TCell_> )
+     TTetraModel<_TPos_:record;_TPoin_:class;_TCell_:class> = class( TTreeNode<_TCell_> )
      private
      protected
-       _PoinModel :TPoinModel<_TPoin_>;
+       _PoinModel :TPoinModel<_TPos_,_TPoin_>;
      public
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property PoinModel :TPoinModel<_TPoin_> read _PoinModel;
+       property PoinModel :TPoinModel<_TPos_,_TPoin_> read _PoinModel;
        ///// メソッド
        procedure DeleteChilds; override;
      end;
@@ -205,14 +205,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TTetraModel<_TPoin_,_TCell_>.Create;
+constructor TTetraModel<_TPos_,_TPoin_,_TCell_>.Create;
 begin
      inherited;
 
-     _PoinModel := TPoinModel<_TPoin_>.Create;
+     _PoinModel := TPoinModel<_TPos_,_TPoin_>.Create;
 end;
 
-destructor TTetraModel<_TPoin_,_TCell_>.Destroy;
+destructor TTetraModel<_TPos_,_TPoin_,_TCell_>.Destroy;
 begin
      _PoinModel.Free;
 
@@ -221,7 +221,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TTetraModel<_TPoin_,_TCell_>.DeleteChilds;
+procedure TTetraModel<_TPos_,_TPoin_,_TCell_>.DeleteChilds;
 begin
      inherited;
 
